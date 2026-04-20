@@ -1,7 +1,22 @@
 \section{System Model}
 
 
-\begin{tikzpicture}
-    \node[rectangle,inner sep=10pt, draw] (BS) at (0,0) {BS};
-    
-\end{tikzpicture}
+
+
+
+
+\subsection{General Data}
+\begin{itemize}
+    \item BS has M antennas
+    \item K user
+    \item RIS with N elements
+    \item C. BS and user k: $\bm{h}_{d, k} \in \mathbb{C}^{M}$
+    \item C. RIS and user k: $\bm{h}_{r, k} \in \mathbb{C}^{N}$
+    \item C. BS and RIS: $\bm{G} \in \mathbb{C}^{NxM}$
+    \item Phase Shift of RIS: $\bm{\theta}$ 
+\end{itemize}
+
+The user receives from BS:
+\begin{equation}
+    y_k = \left(\bm{h}_{d,k}^\HH + \bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}\right) \sum_{k = 1}^{K} \bm{v}_k s_k + n_k
+\end{equation}
