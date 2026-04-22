@@ -7,38 +7,36 @@
     \node[rectangle, draw] (US) at (4,0) {Users};
 
     \draw[-{Latex}] (BS.east) -- (RIS.south west) node[midway, above] {$\bm{G}$};
-    \draw[-{Latex}] (BS.east) -- (US.west) node[midway, below] {$\bm{h}_{d,k}^\HH$};
-    \draw[-{Latex}] (RIS.south east) -- (US.west) node[midway, right, above] {$\bm{h}_{r,k}^\HH$};
+    \draw[-{Latex}] (BS.east) -- (US.west) node[midway, below] {$\bm{h}_{d,k}$};
+    \draw[-{Latex}] (RIS.south east) -- (US.west) node[midway, right, above] {$\bm{h}_{r,k}$};
 \end{tikzpicture}
 \caption{A base concept of the system.}
 \end{figure}
 
-The Model is described by a Downlink MISO System. It consists of three main elements,
-the Base Station (BS), the users and the Reconﬁgurable intelligent surface (RIS).
-The system has the following components:
+The model is described by a downlink MISO system. It consists of three main elements: the Base Station (BS), the users, and the Reconfigurable Intelligent Surface (RIS).
+The system has the following parameters:
 \begin{itemize}
-    \item BS has M antennas
-    \item There are K users to be serviced
-    \item RIS has N elements, which causes a phase shift of $\bm{\theta} \in \mathbb{C}^N$, in each element respectivly
+    \item BS has M antennas.
+    \item There are K users to be serviced.
+    \item RIS has N elements, which causes a phase shift of $\bm{\theta} \in \mathbb{C}^N$.
     \item $\bm{h}_{d, k} \in \mathbb{C}^{M}$ is the channel matrix between the BS and the user $k$.
-    \item $\bm{G} \in \mathbb{C}^{NxM}$ is the channel matrix between the BS and the RIS.
+    \item $\bm{G} \in \mathbb{C}^{N \text{x} M}$ is the channel matrix between the BS and the RIS.
     \item $\bm{h}_{r, k} \in \mathbb{C}^{N}$ is the channel matrix between the BS and the user $k$. 
 \end{itemize}
 
 Therefore the user $k$ receives the signal:
 \begin{equation}
-    y_k = \left(\bm{h}_{d,k}^\HH + \bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}\right) \sum_{k = 1}^{K} \bm{v}_k s_k + n_k
+    y_k = \left(\bm{h}_{d,k}^\HH + \bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}\right) \sum_{i = 1}^{K} \bm{v}_i s_i + n_k
 \end{equation}
 from the BS.
 Where:
 \begin{itemize}
-    \item $s_k$ is data symbol for user k
+    \item $s_i$ is data symbol for user i
     \item $n_k$ add. white Guassian noise. $n_k \sim \mathcal{CN}(0, \sigma^2)$
-    \item $\sum_{k = 1}^{K} \bm{v}_k s_k = \bm{x}$ the signal send by the the BS. \textcolor{red}{?}
-    \item $\bm{v}_k \in \mathbb{C}^{M x 1}$ is the beamforming vector from the BS to the user k.
-    \item $\bm{h}_{d,k}^\HH$ is direct path between the BS and user k.
-    \item $\bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}$ is the path from the BS to RIS, application of the phase shift and then the path form the RIS to the user k.
-    \item $\diag(\bm{\theta})$ simply creates a diagonal matrix with the vector.
+    \item $\sum_{i = 1}^{K} \bm{v}_i s_i = \bm{x}$ the signal send by the the BS.
+    \item $\bm{v}_i \in \mathbb{C}^{M x 1}$ is the beamforming vector from the BS to the user $i$.
+    \item $\bm{h}_{d,k}^\HH$ is direct path between the BS and user $k$.
+    \item $\bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}$ is the path from the BS to RIS, application of the phase shift and then the path form the RIS to the user $k$.
     \item Summary: $y_k = (\bm{h}_{dir}^\HH + \bm{h}_{indir}^\HH) \bm{x} + n_k$
 \end{itemize}
 
@@ -47,9 +45,7 @@ The SINR can be calculated as:
     \alpha_k = \frac{\left|\left(\bm{h}_{d,k}^\HH + \bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}\bm{v}_k\right)\right|^2}{\sum_{i=1, i \ne k}^{K}\left|\left(\bm{h}_{d,k}^\HH + \bm{h}_{r,k}^\HH \diag(\bm{\theta}) \bm{G}\bm{v}_i\right)\right|^2 + \sigma_0^2}
 \end{equation}
 
-which is simple the expected signal divided by the sum of the noise and all other signals send.
-
-
+which is simply the expected signal divided by the sum of the noise and all other signals sent.
 
 
 The objective is to maximize the weighted sum rate (WSR):
@@ -60,7 +56,7 @@ The objective is to maximize the weighted sum rate (WSR):
     & \sum_{k=1}^{K} \omega_k \log(1 + \alpha_k) \\
     \text{s.t.} \quad 
     & |\theta_n| = 1, \ \forall n, \\
-    & \sum_{k=1}^{K} \|\bm{v}_k\| \le P_{\max}
+    & \sum_{k=1}^{K} \|\bm{v}_k\|^2 \le P_{\max}
 \end{align}
 
 The system allows changing the beamforming vectors of the BS and the phase shift values of the RIS elements.

@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1776867083.65398 "/home/jannes/Desktop/Files/University/M_ETIT/2_Semester/FDS/PaperReview/main.tex" "main.pdf" "main" 1776867084.11049 0
+["pdflatex"] 1776872655.09583 "/home/jannes/Desktop/Files/University/M_ETIT/2_Semester/FDS/PaperReview/main.tex" "main.pdf" "main" 1776872655.72906 0
   "/etc/texmf/web2c/texmf.cnf" 1767553399.45731 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/jannes/Desktop/Files/University/M_ETIT/2_Semester/FDS/PaperReview/main.tex" 1776866754.23896 1008 c6f99446ed7d86ad010f0f438824501e ""
+  "/home/jannes/Desktop/Files/University/M_ETIT/2_Semester/FDS/PaperReview/main.tex" 1776872654.33607 972 5ecd40846b7980bcff29193c27615fe3 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1136768653 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -144,9 +144,10 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1767553413 5467255 9a64d1b40e0b893fc5588ecce9d8accf ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1767553476 3347697 8105f697b5c29f69c6e404e996de6e22 ""
   "IEEEtran.cls" 1776171360.15586 288451 2ca944e3837f3f55e325ddfd2f1a2479 ""
-  "main.aux" 1776867084.07205 408 2015c02aca736758a2bb6dd19df7a7c4 "pdflatex"
-  "main.tex" 1776866754.23896 1008 c6f99446ed7d86ad010f0f438824501e ""
-  "topics/Model/smain.tex" 1776867083.49201 3293 beef12738a1026de3a6337814d334b67 ""
+  "main.aux" 1776872655.68212 384 1748ececb3e766eedcede73d1d8ce0e7 "pdflatex"
+  "main.tex" 1776872654.33607 972 5ecd40846b7980bcff29193c27615fe3 ""
+  "topics/BCDM/smain.tex" 1776872643.70508 41 a23fa3ddda540dd83d1b296d488e46c9 ""
+  "topics/Model/smain.tex" 1776872576.05493 3174 c9935034484d2408ade335e5bb05a2e9 ""
   (generated)
   "main.aux"
   "main.log"
