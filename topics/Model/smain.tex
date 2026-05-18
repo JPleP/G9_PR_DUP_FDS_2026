@@ -21,7 +21,7 @@ The system has the following parameters:
     \item RIS has N elements, which causes a phase shift of $\bm{\theta} \in \mathbb{C}^N$.
     \item $\bm{h}_{d, k} \in \mathbb{C}^{M}$ is the channel matrix between the BS and the user $k$.
     \item $\bm{G} \in \mathbb{C}^{N \text{x} M}$ is the channel matrix between the BS and the RIS.
-    \item $\bm{h}_{r, k} \in \mathbb{C}^{N}$ is the channel matrix between the BS and the user $k$. 
+    \item $\bm{h}_{r, k} \in \mathbb{C}^{N}$ is the channel matrix between the RIS and the user $k$. 
 \end{itemize}
 
 Therefore the user $k$ receives the signal:
@@ -55,7 +55,7 @@ The objective is to maximize the weighted sum rate (WSR):
     \max_{\mathbf{V}, \bm{\theta}} \quad 
     & \sum_{k=1}^{K} \omega_k \log(1 + \alpha_k) \\
     \text{s.t.} \quad 
-    & |\theta_n| = 1, \ \forall n, \\
+    & |\theta_n| = 1, \ \forall n, \label{eq:theta_constraint} \\
     & \sum_{k=1}^{K} \|\bm{v}_k\|^2 \le P_{\max}
 \end{align}
 

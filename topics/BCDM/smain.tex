@@ -1,1 +1,89 @@
 \section{Block Coordinate Descent Method}
+
+The Block Coordinate Descent method is an iterative optimization algorithm to solve multi-variable problems by partitioning the variables into smaller blocks. At each step, one variable is optimized while keeping the others fixed.
+
+The optimization problem $(\mathcal{P}_1)$ is non-convex in two variables: the beamforming matrix $\bm{V}$ and the RIS phase-shift vector $\bm{\theta}$.
+A direct joint optimization is therefore not feasible.
+
+First, the Lagrangian dual transform is applied to transform $\mathcal{P}_1$ into a more manageable form \cite{shen2018fractional}.
+
+\begin{align}
+    (\mathcal{P}_{1\text{-}1}): \quad \max_{\bm{V}, \bm{\theta}, \bm{\gamma}} \quad
+    & \sum_{k=1}^{K} \omega_k \!\left[\log(1+\gamma_k) - \gamma_k + \frac{(1+\gamma_k)\alpha_k}{1+\alpha_k}\right] \notag \\
+    \text{s.t.} \quad & |\theta_n| = 1, \ \forall n, \\
+    & \sum_{k=1}^{K} \|\bm{v}_k\|^2 \le P_{\max}.
+\end{align}
+For fixed $(\bm{V}, \bm{\theta})$, the optimal auxiliary value is $\gamma_k^\star = \alpha_k$.
+When $\bm{\gamma}$ is fixed, $(\mathcal{P}_{1\text{-}1})$ collapses to
+\begin{equation}
+    (\mathcal{P}_2): \quad \max_{\bm{V}, \bm{\theta}} \ \sum_{k=1}^{K} \frac{\omega_k (1+\gamma_k)\alpha_k}{1+\alpha_k}.
+\end{equation}
+
+\subsection{Update of $\bm{V}$}
+
+Let $\bm{h}_k = \bm{h}_{d,k} + \bm{G}^\HH \diag(\bm{\theta})\bm{h}_{r,k}$
+\begin{equation}
+    f_1(\bm{V}) =
+    \sum_{k=1}^{K}
+    \frac{\omega_k(1+\gamma_k)\left|\bm{h}_k^{\HH}\bm{v}_k\right|^2}
+    {\sum_{i=1}^{K}\left|\bm{h}_k^{\HH}\bm{v}_i\right|^2+\sigma_0^2},
+\end{equation}
+Applying the quadratic transform \cite{shen2018fractional} ...
+\begin{align}
+    f_1'(\bm{V}, \bm{z}) = \ & \sum_{k=1}^{K} 2\sqrt{\omega_k(1+\gamma_k)}\, \mathrm{Re}\!\left\{z_k^{*}\, \bm{h}_k^{\HH}\bm{v}_k\right\} \notag \\
+    & - \sum_{k=1}^{K} |z_k|^2 \!\left(\sum_{i=1}^{K}\left|\bm{h}_k^{\HH}\bm{v}_i\right|^2 + \sigma_0^2\right).
+\end{align}
+\begin{equation}
+    z_k^{\circ} = \frac{\sqrt{\omega_k(1+\gamma_k)}\, \bm{h}_k^{\HH}\bm{v}_k}{\sum_{i=1}^{K}\left|\bm{h}_k^{\HH}\bm{v}_i\right|^2 + \sigma_0^2}.
+\end{equation}
+
+\begin{equation}
+    \bm{v}_k^{\circ} = \sqrt{\omega_k(1+\gamma_k)}\, z_k \left(\eta \bm{I}_M + \bm{A}\right)^{-1} \bm{h}_k,
+\end{equation}
+where $\bm{A} = \sum_{k=1}^{K} |z_k|^2 \bm{h}_k \bm{h}_k^{\HH}$.
+\begin{equation}
+    \eta^{\circ} = \min\!\left\{\eta \ge 0 : \sum_{k=1}^{K} \|\bm{v}_k(\eta)\|_2^2 \le P_{\max}\right\},
+\end{equation}
+
+\subsection{Update of $\bm{\theta}$}
+
+define
+\begin{equation}
+    \bm{a}_{i,k} = \diag(\bm{h}_{r,k}^{\HH})\bm{G}\bm{v}_i,
+    \qquad
+    b_{i,k} = \bm{h}_{d,k}^{\HH}\bm{v}_i,
+\end{equation}
+the objective function $(\mathcal{P}_2)$ can be rewritten as
+\begin{equation}
+    f_2(\bm{\theta}) = \sum_{k=1}^{K}
+    \frac{\omega_k(1+\gamma_k)\left|b_{k,k} + \bm{\theta}^{\HH}\bm{a}_{k,k}\right|^2}
+    {\sum_{i=1}^{K}\left|b_{i,k} + \bm{\theta}^{\HH}\bm{a}_{i,k}\right|^2 + \sigma_0^2}.
+\end{equation}
+quadratic transform:
+\begin{align}
+    f_2'(\bm{\theta}) = \ & \sum_{k=1}^{K} 2\sqrt{\omega_k(1+\gamma_k)}\, \mathrm{Re}\!\left\{z_k^{*}\bm{\theta}^{\HH}\bm{a}_{k,k} + z_k^{*} b_{k,k}\right\} \notag \\
+    & - \sum_{k=1}^{K} |z_k|^2 \!\left(\sum_{i=1}^{K}\left|b_{i,k} + \bm{\theta}^{\HH}\bm{a}_{i,k}\right|^2 + \sigma_0^2\right),
+\end{align}
+where $z_k$ is updated using ... 
+then, the phase optimazation can be expressed as
+\begin{equation}
+    f_3(\bm{\theta}) = -\bm{\theta}^{\HH}\bm{U}\bm{\theta} + 2\,\mathrm{Re}\!\left\{\bm{\theta}^{\HH}\bm{\nu}\right\} + \chi,
+\end{equation}
+where $\chi$  is independent of $\bm{\theta}$ and
+\begin{align}
+    \bm{U} &= \sum_{k=1}^{K} |z_k|^2 \sum_{i=1}^{K} \bm{a}_{i,k}\bm{a}_{i,k}^{\HH}, \\
+    \bm{\nu} &= \sum_{k=1}^{K} \!\left(\sqrt{\omega_k(1+\gamma_k)}\, z_k^{*}\bm{a}_{k,k} - |z_k|^2 \sum_{i=1}^{K} b_{i,k}^{*}\bm{a}_{i,k}\right).
+\end{align}
+the update rule for $\bm{\theta}$ is given by
+\begin{equation}
+    \bm{\theta} = \arg\min_{\bm{\theta}} f_3'(\bm{\theta}) \triangleq \bm{\theta}^{\HH}\bm{U}\bm{\theta} - 2\,\mathrm{Re}\!\left\{\bm{\theta}^{\HH}\bm{\nu}\right\}.
+\end{equation}
+Due to constraints in \eqref{eq:theta_constraint}, we substitute $\theta_n = e^{j\varphi_n}$ and obtain
+\begin{equation}
+    \bm{\varphi} = \arg\min_{\bm{\varphi} \in \mathbb{R}^N} f'(\bm{\varphi}) \triangleq \left(e^{j\bm{\varphi}}\right)^{\HH}\bm{U}\,e^{j\bm{\varphi}} - 2\,\mathrm{Re}\!\left\{\bm{\nu}^{\HH} e^{j\bm{\varphi}}\right\},
+\end{equation}
+which is a non-convex problem whose optimal solution is hard to find. Following \cite{shen2018fractional}, we resort to the successive convex approximation (SCA) technique.
+
+The full BCD method based on the Lagrangian dual transform thus updates $\bm{z}, \bm{V}, \bm{\varphi}$, and $\bm{\alpha}$ repeatedly until convergence. In each outer iteration, two inner iterative processes are also required. The BCD method is therefore a two-layer iterative process that relies on complex operations such as matrix inversion and one-dimensional search, leading to high computational complexity and latency. To deal with this issue, the DUFP scheme is proposed in the next section.
+
+
